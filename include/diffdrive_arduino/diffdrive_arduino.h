@@ -2,58 +2,56 @@
 #define DIFFDRIVE_ARDUINO_REAL_ROBOT_H
 
 #include <cstring>
-#include "rclcpp/rclcpp.hpp"
 
-#include "hardware_interface/base_interface.hpp"
-#include "hardware_interface/system_interface.hpp"
+#include "diffdrive_arduino/arduino_comms.h"
+#include "diffdrive_arduino/config.h"
+#include "diffdrive_arduino/wheel.h"
 #include "hardware_interface/handle.hpp"
 #include "hardware_interface/hardware_info.hpp"
+#include "hardware_interface/system_interface.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
-#include "hardware_interface/types/hardware_interface_status_values.hpp"
+#include "hardware_interface/visibility_control.h"
+#include "rclcpp/rclcpp.hpp"
+#include "rclcpp_lifecycle/state.hpp"
 
-#include "config.h"
-#include "wheel.h"
-#include "arduino_comms.h"
-
-
-using hardware_interface::return_type;
-
-class DiffDriveArduino : public hardware_interface::BaseInterface<hardware_interface::SystemInterface>
+namespace diffdrive_arduino
 {
-
-
+class DiffDriveArduino : public hardware_interface::SystemInterface
+{
 public:
-  DiffDriveArduino();
+  RCLCPP_SHARED_PTR_DEFINITIONS(DiffDriveArduino)
 
-  return_type configure(const hardware_interface::HardwareInfo & info) override;
+  HARDWARE_INTERFACE_PUBLIC
+  hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
 
+  HARDWARE_INTERFACE_PUBLIC
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
 
+  HARDWARE_INTERFACE_PUBLIC
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-  return_type start() override;
+  HARDWARE_INTERFACE_PUBLIC
+  hardware_interface::CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
 
-  return_type stop() override;
+  HARDWARE_INTERFACE_PUBLIC
+  hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
 
-  return_type read() override;
+  HARDWARE_INTERFACE_PUBLIC
+  hardware_interface::return_type read(
+    const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
-  return_type write() override;
-
-
+  HARDWARE_INTERFACE_PUBLIC
+  hardware_interface::return_type write(
+    const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
 private:
-
   Config cfg_;
   ArduinoComms arduino_;
-
   Wheel l_wheel_;
   Wheel r_wheel_;
-
   rclcpp::Logger logger_;
-
-  std::chrono::time_point<std::chrono::system_clock> time_;
-  
 };
 
+}  // namespace diffdrive_arduino
 
-#endif // DIFFDRIVE_ARDUINO_REAL_ROBOT_H
+#endif  // DIFFDRIVE_ARDUINO_REAL_ROBOT_H
