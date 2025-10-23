@@ -5,15 +5,15 @@
 
   <!-- Constants for robot dimensions -->
   <xacro:property name="PI" value="3.1415926535897931"/>
-  <xacro:property name="base_mass" value="0.3" /> <!-- arbitrary value for base mass -->
-  <xacro:property name="base_width" value="0.1" />
-  <xacro:property name="base_length" value="0.1" />
-  <xacro:property name="base_height" value="0.05" />
-  <xacro:property name="wheel_mass" value="0.3" /> <!-- arbitrary value for wheel mass -->
-  <xacro:property name="wheel_len" value="0.020" />
-  <xacro:property name="wheel_radius" value="0.015" />
-  <xacro:property name="caster_wheel_mass" value="0.1" /> <!-- arbitrary value for caster wheel mass -->
-  <xacro:property name="caster_wheel_radius" value="0.015" />
+  <xacro:property name="base_mass" value="6.000" /> <!-- arbitrary value for base mass -->
+  <xacro:property name="base_width" value="0.330" />
+  <xacro:property name="base_length" value="0.442" />
+  <xacro:property name="base_height" value="0.100" />
+  <xacro:property name="wheel_mass" value="0.525" /> <!-- arbitrary value for wheel mass -->
+  <xacro:property name="wheel_len" value="0.027" />
+  <xacro:property name="wheel_radius" value="0.050" />
+  <xacro:property name="caster_wheel_mass" value="0.100" /> <!-- arbitrary value for caster wheel mass -->
+  <xacro:property name="caster_wheel_radius" value="0.030" />
   <xacro:property name="z_offset" value="-${base_height/2}" /> <!-- Space btw top of beam and the each joint -->
 
   <!-- Base Link -->
@@ -21,16 +21,16 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${base_width} ${base_length} ${base_height}"/>
+        <box size="${base_length} ${base_width} ${base_height}"/>
       </geometry>
     </collision>
 
     <visual>
       <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
       <geometry>
-        <box size="${base_width} ${base_length} ${base_height}"/>
+        <box size="${base_length} ${base_width} ${base_height}"/>
       </geometry>
-      <material name="orange"/>
+      <material name="black"/>
     </visual>
 
     <inertial>
@@ -119,7 +119,7 @@
       <origin xyz="${base_width/2 - caster_wheel_radius} 0 ${z_offset}" rpy="0 0 0"/>
     </joint>
 
-    <!-- caster frontal wheel Link -->
+    <!-- caster frontal wheel Link-->
     <link name="${prefix}caster_frontal_wheel">
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>

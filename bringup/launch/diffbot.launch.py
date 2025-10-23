@@ -28,7 +28,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("diffdrive_arduino"), "urdf", "diffbot.urdf.xacro"]
+                [FindPackageShare("ifscbot_two"), "description", "robot.urdf.xacro"]
             ),
         ]
     )
@@ -42,7 +42,7 @@ def generate_launch_description():
         ]
     )
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("diffdrive_arduino"), "rviz", "diffbot.rviz"]
+        [FindPackageShare("ifscbot_two"), "config", "main.rviz"]
     )
 
     control_node = Node(
@@ -50,6 +50,7 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[robot_description, robot_controllers],
         output="both",
+        
     )
     robot_state_pub_node = Node(
         package="robot_state_publisher",
@@ -57,7 +58,9 @@ def generate_launch_description():
         output="both",
         parameters=[robot_description],
         remappings=[
-            ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
+            ("/diffbot_base_controller/cmd_vel", "/cmd_vel"),
+        #remappings=[
+            #("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
         ],
     )
     rviz_node = Node(
