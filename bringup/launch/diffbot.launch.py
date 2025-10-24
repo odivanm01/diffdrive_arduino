@@ -34,19 +34,13 @@ def generate_launch_description():
     )
     robot_description = {"robot_description": robot_description_content}
 
-    #robot_controllers = PathJoinSubstitution(
-    #    [
-    #        FindPackageShare("diffdrive_arduino"),
-    #        "config",
-    #        "diffbot_controllers.yaml",
-    #    ]
-    #)
-    robot_controllers_file = PathJoinSubstitution([
-        FindPackageShare("diffdrive_arduino"),
-        "config",
-        "diffbot_controllers.yaml",
-    ])
-
+    robot_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("diffdrive_arduino"),
+            "config",
+            "diffbot_controllers.yaml",
+        ]
+    )
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare("ifscbot_two"), "config", "main.rviz"]
     )
