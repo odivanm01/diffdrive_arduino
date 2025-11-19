@@ -58,18 +58,10 @@ def generate_launch_description():
         output="both",
         parameters=[robot_description],
         remappings=[
-            #("/diffbot_base_controller/cmd_vel", "/cmd_vel"),
-            ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
+            ("/diffbot_base_controller/cmd_vel", "/cmd_vel"),
         ],
     )
-    #rviz_node = Node(
-    #    package="rviz2",
-    #    executable="rviz2",
-    #    name="rviz2",
-    #    output="log",
-    #    arguments=["-d", rviz_config_file],
-    #)
-
+   
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
