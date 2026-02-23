@@ -100,7 +100,6 @@ public:
   {
     std::stringstream ss;
     ss << "m " << val_1 << " " << val_2 << "\r";
-    //ss << "m " << 20 << " " << -20 << "\r";
     send_msg(ss.str());
   }
 
